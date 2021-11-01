@@ -5,9 +5,23 @@ pygame.init()
 
 screen = pygame.display.set_mode((1000,800))
 
+font = pygame.font.Font(None, 74)
+
 pygame.display.set_caption("Pankin Breakout")
 
 doExit = False
+
+#auto play
+autoPlay = False
+
+#to do things every some loops
+timer = 0
+
+#player deaths
+dead = 0
+
+#counting dead pumpkins
+deaths = 0
 
 #player setup----------------------------------------------------------------------
 playerX = 300
@@ -16,7 +30,7 @@ playerY = 780
 pVelx = .0
 
 #ball setup
-bx = 350
+bx = random.randrange(50,950)
 by = 600
 bVx = 5
 bVy = 5
@@ -34,12 +48,14 @@ class pankin:
         pygame.draw.arc(screen, (0, 0, 0), ((self.posX - 15), self.posY, 30, 20), math.pi, math.pi*2, 2)
         pygame.draw.arc(screen, (0, 0, 0), ((self.posX - 25), (self.posY - 20), 20, 20), 0, math.pi, 2)
         pygame.draw.arc(screen, (0, 0, 0), (self.posX, (self.posY - 20), 20, 20), 0, math.pi, 2)
-   
-    def CircleCollide(self, x, y, r):
-        if math.sqrt(((self.posX-x) * (self.posX-x)) + ((self.posY-y) * (self.posY-y))) < (r + 50):
-            return True
-        else:
-            return False
+    def CircleCollide(self, x, y):
+         return math.sqrt(((self.posX-x) * (self.posX-x)) + ((self.posY-y) * (self.posY-y)))
+    
+    #def CircleCollide(self, x, y, r):
+    #    if math.sqrt(((self.posX-x) * (self.posX-x)) + ((self.posY-y) * (self.posY-y))) < (r + 50):
+    #        return True
+    #    else:
+    #        return False
     def kill(self):
         self.isDead = True
     def checkDead(self):
@@ -65,11 +81,11 @@ while doExit == False:
 
     #wall check
     if playerX >= 800:
-        pVelx = .0
+        pVelx *= -1
         playerX = 800.0
     if playerX <= 0:
         playerX = 0.0
-        pVelx = .0
+        pVelx *= -1
 
     if bx >= 995:
         bVx *= -1
@@ -82,43 +98,69 @@ while doExit == False:
 
     #floor check (really lose/die check)
     if by >= 790:
-        bx = 400
+        bx = random.randrange(50,950)
         by = 600
-        playerX = 300
+        playerX = bx
+        dead += 1
 
     #player check
     if bx-5 >= playerX and bx-5 <= playerX+200 and by >= playerY:
         bVy *= -1
+        bVx += random.randint(-5,5)/5
+        print(bVx)
     elif bx+5 >= playerX and bx+5 <= playerX+200 and by >= playerY:
         bVy *= -1
-    #Player 1 Up and Down
+        bVx += random.randint(-5,5)/5
+        print(bVx)
+    #Player Input
     keys = pygame.key.get_pressed()
     if keys[pygame.K_d]:
         pVelx = 8
     if keys[pygame.K_a]:
         pVelx = -8
-   
+    
+    if keys[pygame.K_SPACE] and timer == 0:
+        timer = 60
+        if autoPlay == False:
+            autoPlay = True
+        elif autoPlay == True:
+            autoPlay = False
+    if timer > 0:
+        timer -= 1
     #friction
     pVelx *= .95
 
     for x in patch:
-        if x.CircleCollide(bx, by, 5) == True and x.checkDead() == False:
+        if x.CircleCollide(bx, by) < (5 + 50) and x.checkDead() == False:
             x.kill()
+            deaths += 1
             bVy *= -1
 
     #move things
     playerX += pVelx;
     by += bVy
     bx += bVx
+    if autoPlay == True:
+        playerX = bx - 100
    
    
            
 
     #render
     screen.fill((0,0,0))
-    pygame.draw.rect(screen, (255,255,255), (playerX, playerY, 200,10))
-    pygame.draw.circle(screen, (255,255,255), (bx,by), 5)
-    for pankin in patch:
-        if pankin.isDead == False:
-            pankin.draw()
+    if deaths == 30:
+        text = font.render("You Win!", 1, (255 ,255 ,255))
+        screen.blit(text, (400,350))
+    else:
+        if autoPlay == True:
+            text = font.render("AI On", 1, (255 ,255 ,255))
+            screen.blit(text, (20,20))
+    
+        text = font.render(str(dead), 1, (255 ,255 ,255))
+        screen.blit(text, (950,20))
+        pygame.draw.rect(screen, (255,255,255), (playerX, playerY, 200,10))
+        pygame.draw.circle(screen, (255,255,255), (bx,by), 5)
+        for pankin in patch:
+            if pankin.isDead == False:
+                pankin.draw()
     pygame.display.flip()
