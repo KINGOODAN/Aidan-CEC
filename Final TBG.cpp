@@ -7,7 +7,7 @@ using namespace std;
 //function declarations (needed for each one you write)
 void thingsforall(string s);
 void shop();
-void monster();
+int monster();
 void combat();
 int playerHealth = 100;
 
@@ -766,6 +766,7 @@ void shop() {
 		cout << "Welcom to the shop. \n Choose one item" << endl;
 		cout << "A for axe." << endl;
 		cout << "Sw for Sword." << endl;
+        cout << "Ma for Mace." << endl;
 		cout << "Sh for Sheild." << endl;
 		cin >> input;
 		if (input == "A")
@@ -777,20 +778,40 @@ void shop() {
 	} while (input != "quit");
 }
 
-void monster(){
+int monster(){
     int gen = rand()%3+1;
+    int health;
     if(gen == 1){
         cout << "You see a Skeleton with a sword." << endl << endl;
+        health = 25;
     }
     if(gen == 2){
         cout << "You see a Skeleton with a sword and sheild." << endl << endl;
+        health = 25;
     }
     if(gen == 3){
         cout << "You see an armored Skeleton with a sword." << endl << endl;
+        health = 50;
     }
+
 }
 
 
 void combat(){
+    int swordAT = 10;
+    int axeAT = 10;
+    int maceAT = 10;
+    int MGswordAT = 15;
+    int MGaxeAT = 15;
+    int MGmaceAT = 15;
+    int stickAT = 1000;
+    int monCls;
+    void monCom();
+    void plrCom();
     cout << "You have entered combat!" << endl;
+    monCls = monster();
+    
+    void monCom(){
+        
+    }
 }
