@@ -9,14 +9,26 @@ void thingsforall(string s);
 void shop();
 int monster();
 void combat();
-int playerHealth = 100;
 
 //global variables (in general, not a good idea, but for this small of a game, ok)
 string inventory[5];
 string wall = "Oops you ran into a wall";
+int MonHealth;
+int MonAT;
+int MonCls;
+
+int PlrHealth = 100;
+
+int swordAT = 10;
+int axeAT = 10;
+int maceAT = 10;
+int MGswordAT = 15;
+int MGaxeAT = 15;
+int MGmaceAT = 15;
+int stickAT = 1000;
 
 int main() {
-
+	int MonsterValues[2];
 	int room = 1;
 	string input;
 
@@ -182,7 +194,7 @@ int main() {
 			cout << "You are in room 15." << endl;
 			getline(cin, input);
 			transform(input.begin(), input.end(), input.begin(), ::tolower);
-			if (input.compare("go east") == 0 || input.compare("east") == 0 || input.compare("e") == 0)
+			if (input.compare("go west") == 0 || input.compare("west") == 0 || input.compare("w") == 0)
 				room = 14;
 			else
 				thingsforall(input);
@@ -766,7 +778,7 @@ void shop() {
 		cout << "Welcom to the shop. \n Choose one item" << endl;
 		cout << "A for axe." << endl;
 		cout << "Sw for Sword." << endl;
-        cout << "Ma for Mace." << endl;
+		cout << "Ma for Mace." << endl;
 		cout << "Sh for Sheild." << endl;
 		cin >> input;
 		if (input == "A")
@@ -778,40 +790,30 @@ void shop() {
 	} while (input != "quit");
 }
 
-int monster(){
-    int gen = rand()%3+1;
-    int health;
-    if(gen == 1){
-        cout << "You see a Skeleton with a sword." << endl << endl;
-        health = 25;
-    }
-    if(gen == 2){
-        cout << "You see a Skeleton with a sword and sheild." << endl << endl;
-        health = 25;
-    }
-    if(gen == 3){
-        cout << "You see an armored Skeleton with a sword." << endl << endl;
-        health = 50;
-    }
-
+int monster() {
+	MonCls = rand() % 3 + 1;
+	if (MonCls == 1) {
+		cout << "You see a Skeleton with a sword." << endl << endl;
+		MonHealth = 25;
+		MonAT = 3;
+	}
+	if (MonCls == 2) {
+		cout << "You see a Skeleton with a sword and sheild." << endl << endl;
+		MonHealth = 25;
+		MonAT = 4;
+	}
+	if (MonCls == 3) {
+		cout << "You see an armored Skeleton with a sword." << endl << endl;
+		MonHealth = 50;
+		MonAT = 3;
+	}
+	return 0;
 }
 
+void combat() {
+	cout << "You have entered combat!" << endl;
+	monster();
+	if (PlrHealth >= 0 && MonHealth >= 0) {
 
-void combat(){
-    int swordAT = 10;
-    int axeAT = 10;
-    int maceAT = 10;
-    int MGswordAT = 15;
-    int MGaxeAT = 15;
-    int MGmaceAT = 15;
-    int stickAT = 1000;
-    int monCls;
-    void monCom();
-    void plrCom();
-    cout << "You have entered combat!" << endl;
-    monCls = monster();
-    
-    void monCom(){
-        
-    }
+	}
 }
