@@ -9,12 +9,15 @@ void thingsforall(string s);
 void shop();
 int monster();
 void combat();
+int player();
+void map();
+
 
 //global variables (in general, not a good idea, but for this small of a game, ok)
 string inventory[5];
 string wall = "Oops you ran into a wall";
 int MonHealth;
-int MonAT;
+
 int MonCls;
 
 int PlrHealth = 100;
@@ -26,15 +29,20 @@ int MGswordAT = 15;
 int MGaxeAT = 15;
 int MGmaceAT = 15;
 int stickAT = 1000;
+int gold = 0;
 
 int main() {
 	int MonsterValues[2];
 	int room = 1;
 	string input;
+	int turns = 0;
 
 	cout << "You wake up to find yourself in a SPOOPY dungeon. Can you escape? Good luck!" << "\n" << "If you want to know what commands you can do type help" << endl;
 
+	
+
 	do {
+		turns++;
 		switch (room) {
 		case 1:
 			cout << "You are in room 1." << endl;
@@ -42,6 +50,8 @@ int main() {
 			transform(input.begin(), input.end(), input.begin(), ::tolower);
 			if (input.compare("go east") == 0 || input.compare("east") == 0 || input.compare("e") == 0)
 				room = 2;
+			else if (input.compare("~") == 0)
+				room = 64;
 			else
 				thingsforall(input);
 			break;
@@ -88,6 +98,10 @@ int main() {
 				room = 13;
 			else if (input.compare("go west") == 0 || input.compare("west") == 0 || input.compare("w") == 0)
 				room = 4;
+			else if (input.compare("pickup") == 0) {
+				int c = rand() % 16 + 5;
+				gold += c;
+			}
 			else
 				thingsforall(input);
 			break;
@@ -143,6 +157,10 @@ int main() {
 				room = 2;
 			else if (input.compare("go west") == 0 || input.compare("west") == 0 || input.compare("w") == 0)
 				room = 9;
+			else if (input.compare("pickup") == 0) {
+				int c = rand() % 16 + 5;
+				gold += c;
+			}
 			else
 				thingsforall(input);
 			break;
@@ -154,6 +172,10 @@ int main() {
 				room = 19;
 			else if (input.compare("go east") == 0 || input.compare("east") == 0 || input.compare("e") == 0)
 				room = 12;
+			else if (input.compare("pickup") == 0) {
+				int c = rand() % 16 + 5;
+				gold += c;
+			}
 			else
 				thingsforall(input);
 			break;
@@ -341,6 +363,10 @@ int main() {
 				room = 36;
 			else if (input.compare("go east") == 0 || input.compare("east") == 0 || input.compare("e") == 0)
 				room = 29;
+			else if (input.compare("pickup") == 0) {
+				int c = rand() % 16 + 5;
+				gold += c;
+			}
 			else
 				thingsforall(input);
 			break;
@@ -387,6 +413,10 @@ int main() {
 				room = 40;
 			else if (input.compare("go west") == 0 || input.compare("west") == 0 || input.compare("w") == 0)
 				room = 31;
+			else if (input.compare("pickup") == 0) {
+				int c = rand() % 16 + 5;
+				gold += c;
+			}
 			else
 				thingsforall(input);
 			break;
@@ -398,6 +428,10 @@ int main() {
 				room = 25;
 			else if (input.compare("go east") == 0 || input.compare("east") == 0 || input.compare("e") == 0)
 				room = 34;
+			else if (input.compare("pickup") == 0) {
+				int c = rand() % 16 + 5;
+				gold += c;
+			}
 			else
 				thingsforall(input);
 			break;
@@ -420,6 +454,10 @@ int main() {
 				room = 27;
 			else if (input.compare("go south") == 0 || input.compare("south") == 0 || input.compare("s") == 0)
 				room = 43;
+			else if (input.compare("pickup") == 0) {
+				int c = rand() % 16 + 5;
+				gold += c;
+			}
 			else
 				thingsforall(input);
 			break;
@@ -578,6 +616,10 @@ int main() {
 				room = 41;
 			else if (input.compare("go east") == 0 || input.compare("east") == 0 || input.compare("e") == 0)
 				room = 50;
+			else if (input.compare("pickup") == 0) {
+				int c = rand() % 16 + 5;
+				gold += c;
+			}
 			else
 				thingsforall(input);
 			break;
@@ -609,6 +651,10 @@ int main() {
 			transform(input.begin(), input.end(), input.begin(), ::tolower);
 			if (input.compare("go south") == 0 || input.compare("south") == 0 || input.compare("s") == 0)
 				room = 60;
+			else if (input.compare("pickup") == 0) {
+				int c = rand() % 16 + 5;
+				gold += c;
+			}
 			else
 				thingsforall(input);
 			break;
@@ -642,6 +688,10 @@ int main() {
 				room = 47;
 			else if (input.compare("go east") == 0 || input.compare("east") == 0 || input.compare("e") == 0)
 				room = 56;
+			else if (input.compare("pickup") == 0) {
+				int c = rand() % 16 + 5;
+				gold += c;
+			}
 			else
 				thingsforall(input);
 			break;
@@ -680,6 +730,10 @@ int main() {
 			transform(input.begin(), input.end(), input.begin(), ::tolower);
 			if (input.compare("go north") == 0 || input.compare("north") == 0 || input.compare("n") == 0)
 				room = 51;
+			else if (input.compare("pickup") == 0) {
+				int c = rand() % 31 + 20;
+				gold += c;
+			}
 			else
 				thingsforall(input);
 			break;
@@ -713,6 +767,10 @@ int main() {
 				room = 54;
 			else if (input.compare("go east") == 0 || input.compare("east") == 0 || input.compare("e") == 0)
 				room = 63;
+			else if (input.compare("pickup") == 0) {
+				int c = rand() % 16 + 5;
+				gold += c;
+			}
 			else
 				thingsforall(input);
 			break;
@@ -735,6 +793,8 @@ int main() {
 				room = 63;
 			else
 				thingsforall(input);
+
+			cout << "It took you " << turns << " turns to complete the game." << endl;
 			break;
 		}
 	} while (input.compare("quit") != 0);
@@ -761,6 +821,7 @@ void thingsforall(string s) {
 		cout << "look" << endl;
 		cout << "pickup" << endl;
 		cout << "open" << endl;
+		cout << "investigate" << endl;
 	}
 	else if (s.compare("pickup") == 0)
 		cout << "There is nothing to pickup." << endl;
@@ -768,6 +829,10 @@ void thingsforall(string s) {
 		cout << "There is nothing to open." << endl;
 	else if (s.compare("shop") == 0)
 		shop();
+	else if (s.compare("map") == 0)
+		map();
+	else if (s.compare("investigate") == 0)
+		cout << "You did not find anything." << endl;
 	else
 		cout << "sorry, not an option." << endl;
 }
@@ -782,15 +847,18 @@ void shop() {
 		cout << "Sh for Sheild." << endl;
 		cin >> input;
 		if (input == "A")
-			inventory[2] = "Axe";
+			inventory[0] = "Axe";
 		else if (input == "Sw")
-			inventory[2] = "Sword";
+			inventory[0] = "Sword";
+		else if (input == "Ma")
+			inventory[0] = "Mace";
 		else if (input == "Sh")
-			inventory[2] = "Shield";
+			inventory[1] = "Shield";
 	} while (input != "quit");
 }
 
 int monster() {
+	int MonAT;
 	MonCls = rand() % 3 + 1;
 	if (MonCls == 1) {
 		cout << "You see a Skeleton with a sword." << endl << endl;
@@ -807,13 +875,34 @@ int monster() {
 		MonHealth = 50;
 		MonAT = 3;
 	}
+	return MonAT;
+}
+
+int player() {
 	return 0;
 }
 
 void combat() {
+	int MONAT;
+	int MonAT = monster();
 	cout << "You have entered combat!" << endl;
-	monster();
-	if (PlrHealth >= 0 && MonHealth >= 0) {
-
+	while (PlrHealth >= 0 && MonHealth >= 0) {
+		MONAT = rand() % MonAT + 1;
+		if (MONAT == 1) {
+			cout << "slash";
+		}
+		else if (MONAT == 2) {
+			cout << "jab";
+		}
+		else if (MONAT == 3) {
+			cout << "over head";
+		}
+		else if (MONAT == 4) {
+			cout << "block";
+		}
 	}
+}
+
+void map() {
+
 }
