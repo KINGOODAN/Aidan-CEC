@@ -6,6 +6,7 @@ pygame.init
 RED = (250,0,0)
 ORANGE = (200, 100, 0)
 GREEN = (0,150, 0)
+BROWN = (165,42,42)
 
 
 # parent class
@@ -50,13 +51,35 @@ class Flower( Plant ):
             pygame.draw.circle(screen, (self.color), (self.xpos+(20*self.petal), self.ypos-(20*self.petal)), 20+self.size)
             
             pygame.draw.circle(screen, (ORANGE), (self.xpos, self.ypos), 20+self.size)         
-                
+
+class Tree( Plant ):
+
+    def __init__(self, xpos, ypos, type, color):
+                self.color = color
+                self.type = type
+  
+                # invoking the __init__ of the parent class 
+                Plant.__init__(self, xpos, ypos)
+
+    def draw(self):
+            pygame.draw.rect(screen, (BROWN), (self.xpos-10, self.ypos+20, 20, 100+self.size*10)) 
+            pygame.draw.circle(screen, (GREEN), (self.xpos-(15*self.petal), self.ypos+(15*self.petal)), 20+self.size)
+            pygame.draw.circle(screen, (GREEN), (self.xpos+(15*self.petal), self.ypos+(15*self.petal)), 20+self.size) 
+            pygame.draw.circle(screen, (GREEN), (self.xpos-(15*self.petal), self.ypos-(15*self.petal)), 20+self.size)
+            pygame.draw.circle(screen, (GREEN), (self.xpos+(15*self.petal), self.ypos-(15*self.petal)), 20+self.size)
+            pygame.draw.circle(screen, (GREEN), (self.xpos, self.ypos+(20*self.petal)), 20+self.size)
+            pygame.draw.circle(screen, (GREEN), (self.xpos+(20*self.petal), self.ypos), 20+self.size) 
+            pygame.draw.circle(screen, (GREEN), (self.xpos-(20*self.petal), self.ypos), 20+self.size)
+            pygame.draw.circle(screen, (GREEN), (self.xpos, self.ypos-(20*self.petal)), 20+self.size)
+            
+            pygame.draw.circle(screen, (GREEN), (self.xpos, self.ypos), 20+self.size)
                   
 # creation of an object variable or an instance
 f1 = Flower(random.randint(200,550), random.randint(200,550), "daisy", RED)   
 f2 = Flower(random.randint(650,1000), random.randint(200,550), "daisy", RED) 
 f3 = Flower(random.randint(200,550), random.randint(650,1000), "daisy", RED) 
 f4 = Flower(random.randint(650,1000), random.randint(650,1000), "daisy", RED) 
+t1 = Tree(600, 600, "Tree", GREEN)
 
 #creates game screen and caption
 screen = pygame.display.set_mode((1200, 1200))
@@ -85,6 +108,7 @@ while not doExit:
         f2.getWatered()
         f3.getWatered()
         f4.getWatered()
+        t1.getWatered()
         print("watering plant!")
      
     #render section-----------------------------------
@@ -99,6 +123,9 @@ while not doExit:
     f3.draw()
     f4.grow()
     f4.draw()
+    t1.grow()
+    t1.draw()
+    
 
     pygame.display.flip() #update graphics each game loop
 
